@@ -3,7 +3,7 @@ using Sdk;
 
 namespace SingleResponsabilityPrinciple.Tests
 {
-    public class Tests
+    public class SRPTests
     {
         [Test]
         public async Task Quand_Je_Sauvegarde_Et_Recharge_Un_Livre_Depuis_Un_Fichier_Alors_Ses_Proprietes_Sont_Identiques()
