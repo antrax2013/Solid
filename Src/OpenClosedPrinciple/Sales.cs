@@ -4,7 +4,7 @@ public sealed class Sales(IEnumerable<Object> invoices)
 {
     private readonly IEnumerable<Object> _invoices = invoices;
 
-    public decimal GetSales()
+    public decimal GetTaxedSales()
     {
         decimal total = 0;
 

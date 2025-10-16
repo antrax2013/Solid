@@ -1,14 +1,12 @@
 ﻿using Sdk;
 
-namespace OpenClosedPrinciple;
+namespace LiskovSubstitutionPrinciple;
 
-public sealed class FrenchInvoice(IEnumerable<Item> items)
+public sealed class FrenchInvoice(IEnumerable<Item> items) : Invoice(items)
 {
     const decimal TAXE_RATE = 1.2m;
-    private readonly IEnumerable<Item> _items = items;
 
-
-    public decimal GetTaxedTotal()
+    public override decimal GetTaxedTotal()
     {
         decimal total = 0.0m;
 
