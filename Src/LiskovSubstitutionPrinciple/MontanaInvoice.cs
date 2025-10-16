@@ -1,6 +1,6 @@
 ﻿using Sdk;
 
-namespace InterfaceSegregationPrinciple;
+namespace LiskovSubstitutionPrinciple;
 
 public sealed class MontanaInvoice(IEnumerable<Item> items) : AInvoice(items)
 {

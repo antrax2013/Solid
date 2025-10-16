@@ -2,7 +2,7 @@
 
 namespace InterfaceSegregationPrinciple;
 
-public sealed class FrenchInvoice(IEnumerable<Item> items) : ATaxedInvoice(items)
+public sealed class FrenchInvoice(IEnumerable<Item> items) : AInvoice(items)
 {
     const decimal TAXE_RATE = 1.2m;
 

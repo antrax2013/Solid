@@ -40,6 +40,20 @@ public sealed class LSTests
     }
 
     [Test]
+    public void Quand_Je_Caclue_Le_Total_D_une_Facture_Du_Montana_Alors_J_Obtiens_Le_Montant_Attendu()
+    {
+        // Given
+        List<Item> items = [
+            new("Chaussure", 100, ItemType.Good),
+            new("Livraison", 10, ItemType.Service)
+        ];
+        MontanaInvoice invoice = new(items);
+
+        // When - Then
+        Check.ThatCode(() => invoice.GetTaxedTotal()).Throws<NotImplementedException>();
+    }
+
+    [Test]
     public void Quand_Je_Calcule_Mon_Chiffre_D_Affaire_Alors_J_Obtiens_Le_Resultat_Attendu()
     {
         // Given
