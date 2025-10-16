@@ -1,9 +1,10 @@
-﻿using NFluent;
+﻿using InterfaceSegregationPrinciple;
+using NFluent;
 using Sdk;
 
 namespace LiskovSubstitutionPrinciple.Tests
 {
-    public sealed class LSTests
+    public sealed class ISPTests
     {
         [Test]
         public void Quand_Je_Caclue_Le_Total_D_une_Facture_Francaise_Alors_J_Obtiens_Le_Montant_Attendu()
@@ -45,14 +46,14 @@ namespace LiskovSubstitutionPrinciple.Tests
             // Given
             Sales sales = new([
                 new FrenchInvoice([
-                    new("Chaussure", 100, ItemType.Good),
-                    new("Livraison", 10, ItemType.Service)
-                ]),
-                new ItalianInvoice([
-                    new("Chaussure", 100, ItemType.Good),
-                    new("Livraison", 10, ItemType.Service)
-                ]),
-            ]);
+                new("Chaussure", 100, ItemType.Good),
+                new("Livraison", 10, ItemType.Service)
+            ]),
+            new ItalianInvoice([
+                new("Chaussure", 100, ItemType.Good),
+                new("Livraison", 10, ItemType.Service)
+            ]),
+        ]);
 
             // When
             decimal taxedTotal = sales.GetTaxedSales();
