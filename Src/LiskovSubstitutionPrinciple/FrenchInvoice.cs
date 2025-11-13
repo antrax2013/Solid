@@ -2,7 +2,7 @@
 
 namespace LiskovSubstitutionPrinciple;
 
-public sealed class FrenchInvoice(IEnumerable<Item> items) : Invoice(items)
+public sealed class FrenchInvoice(IEnumerable<Item> items) : ATaxedInvoice(items)
 {
     const decimal TAXE_RATE = 1.2m;
 

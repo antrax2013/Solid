@@ -13,10 +13,10 @@ namespace DependencyInjectionPrinciple.Tests
                 new("Chaussure", 100, ItemType.Good),
                 new("Livraison", 10, ItemType.Service)
             ];
-            FrenchInvoice invoice = new(items);
+            Invoice invoice = new FrenchInvoiceFactory(items).GetInstance();
 
             // When
-            decimal taxedTotal = invoice.GetTaxedTotal();
+            decimal taxedTotal = invoice.GetTotal();
 
             // Then
             Check.That(taxedTotal).IsEqualTo(132);
@@ -30,13 +30,30 @@ namespace DependencyInjectionPrinciple.Tests
                 new("Chaussure", 100, ItemType.Good),
                 new("Livraison", 10, ItemType.Service)
             ];
-            ItalianInvoice invoice = new(items);
+            Invoice invoice = new ItalianInvoiceFactory(items).GetInstance();
 
             // When
-            decimal taxedTotal = invoice.GetTaxedTotal();
+            decimal taxedTotal = invoice.GetTotal();
 
             // Then
             Check.That(taxedTotal).IsEqualTo(134.2m);
+        }
+
+        [Test]
+        public void Quand_Je_Caclue_Le_Total_D_une_Facture_Du_Montana_Alors_J_Obtiens_Le_Montant_Attendu()
+        {
+            // Given
+            List<Item> items = [
+                new("Chaussure", 100, ItemType.Good),
+                new("Livraison", 10, ItemType.Service)
+            ];
+            Invoice invoice = new MontanaInvoiceFactory(items).GetInstance();
+
+            // When
+            decimal taxedTotal = invoice.GetTotal();
+
+            // Then
+            Check.That(taxedTotal).IsEqualTo(110m);
         }
 
         [Test]
@@ -44,14 +61,14 @@ namespace DependencyInjectionPrinciple.Tests
         {
             // Given
             Sales sales = new([
-                new FrenchInvoice([
+                new FrenchInvoiceFactory([
                     new("Chaussure", 100, ItemType.Good),
                     new("Livraison", 10, ItemType.Service)
-                ]),
-                new ItalianInvoice([
+                ]).GetInstance(),
+                new ItalianInvoiceFactory([
                     new("Chaussure", 100, ItemType.Good),
                     new("Livraison", 10, ItemType.Service)
-                ]),
+                ]).GetInstance()
             ]);
 
             // When

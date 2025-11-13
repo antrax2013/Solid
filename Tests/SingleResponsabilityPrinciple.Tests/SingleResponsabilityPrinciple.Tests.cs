@@ -9,12 +9,13 @@ public sealed class SRPTests
     {
         //Given 
         Book book = new("Mon titre", "John Doe", "978-2290415634", 448, new DateTime(2025, 10, 11));
+        BookRepository repo = new("./");
 
         //When
-        Result saveOperation = await book.SaveToFile("./");
+        Result saveOperation = await repo.SaveToFile(book);
         Check.That(saveOperation.IsSuccess).IsTrue();
 
-        Result<Book> readOperation = await book.LoadFromFile("./");
+        Result<Book> readOperation = await repo.LoadFromFile(book);
         Check.That(readOperation.IsSuccess).IsTrue();
         Check.That(readOperation.Value).HasFieldsWithSameValues(book);
     }
