@@ -1,10 +1,14 @@
 ﻿using NFluent;
 using Sdk;
 
-namespace InterfaceSegregationPrinciple.Tests;
+namespace SOLIDPrinciples.Tests;
 
-public sealed class ISPTests
+public class SOLIDTests
 {
+    private readonly FrenchCategoryMapper frMapper = new();
+    private readonly ItalianCategoryMapper itMapper = new();
+    private readonly MonatanaCategoryMapper mtMapper = new();
+
     [Test]
     public void Quand_Je_Caclue_Le_Total_D_une_Facture_Francaise_Alors_J_Obtiens_Le_Montant_Attendu()
     {
@@ -13,13 +17,13 @@ public sealed class ISPTests
             new("Chaussure", 100, ItemType.Good),
             new("Livraison", 10, ItemType.Service)
         ];
-        FrenchInvoice invoice = new(items);
+        Invoice invoice = new(items, frMapper);
 
         // When
-        decimal taxedTotal = invoice.GetTaxedTotal();
+        decimal total = invoice.GetTaxedTotal();
 
         // Then
-        Check.That(taxedTotal).IsEqualTo(132);
+        Check.That(total).IsEqualTo(132);
     }
 
     [Test]
@@ -30,13 +34,13 @@ public sealed class ISPTests
             new("Chaussure", 100, ItemType.Good),
             new("Livraison", 10, ItemType.Service)
         ];
-        ItalianInvoice invoice = new(items);
+        Invoice invoice = new(items, itMapper);
 
         // When
-        decimal taxedTotal = invoice.GetTaxedTotal();
+        decimal total = invoice.GetTaxedTotal();
 
         // Then
-        Check.That(taxedTotal).IsEqualTo(134.2m);
+        Check.That(total).IsEqualTo(134.2m);
     }
 
     [Test]
@@ -47,13 +51,13 @@ public sealed class ISPTests
             new("Chaussure", 100, ItemType.Good),
             new("Livraison", 10, ItemType.Service)
         ];
-        MontanaInvoice invoice = new(items);
+        Invoice invoice = new(items, mtMapper);
 
         // When
-        decimal taxedTotal = invoice.GetTotal();
+        decimal total = invoice.GetTaxedTotal();
 
         // Then
-        Check.That(taxedTotal).IsEqualTo(110m);
+        Check.That(total).IsEqualTo(110m);
     }
 
     [Test]
@@ -61,20 +65,20 @@ public sealed class ISPTests
     {
         // Given
         Sales sales = new([
-            new FrenchInvoice([
-            new("Chaussure", 100, ItemType.Good),
-            new("Livraison", 10, ItemType.Service)
-        ]),
-        new ItalianInvoice([
-            new("Chaussure", 100, ItemType.Good),
-            new("Livraison", 10, ItemType.Service)
-        ]),
-    ]);
+            new Invoice([
+                new("Chaussure", 100, ItemType.Good),
+                new("Livraison", 10, ItemType.Service),
+            ], frMapper),
+            new Invoice([
+                new("Chaussure", 100, ItemType.Good),
+                new("Livraison", 10, ItemType.Service)
+            ], itMapper),
+        ]);
 
         // When
-        decimal taxedTotal = sales.GetTaxedSales();
+        decimal total = sales.GetTaxedSales();
 
         // Then
-        Check.That(taxedTotal).IsEqualTo(266.2m);
+        Check.That(total).IsEqualTo(266.2m);
     }
 }

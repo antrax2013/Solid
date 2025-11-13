@@ -1,9 +1,10 @@
-﻿using NFluent;
+﻿using LiskovSubstitutionPrinciple.AcceptableNullableWay;
+using NFluent;
 using Sdk;
 
-namespace InterfaceSegregationPrinciple.Tests;
+namespace AcceptableNullableWayLiskovSubstitutionPrinciple.Tests;
 
-public sealed class ISPTests
+public sealed class ANWLSTests
 {
     [Test]
     public void Quand_Je_Caclue_Le_Total_D_une_Facture_Francaise_Alors_J_Obtiens_Le_Montant_Attendu()
@@ -16,7 +17,7 @@ public sealed class ISPTests
         FrenchInvoice invoice = new(items);
 
         // When
-        decimal taxedTotal = invoice.GetTaxedTotal();
+        decimal? taxedTotal = invoice.GetTaxedTotal();
 
         // Then
         Check.That(taxedTotal).IsEqualTo(132);
@@ -33,7 +34,7 @@ public sealed class ISPTests
         ItalianInvoice invoice = new(items);
 
         // When
-        decimal taxedTotal = invoice.GetTaxedTotal();
+        decimal? taxedTotal = invoice.GetTaxedTotal();
 
         // Then
         Check.That(taxedTotal).IsEqualTo(134.2m);
@@ -50,10 +51,10 @@ public sealed class ISPTests
         MontanaInvoice invoice = new(items);
 
         // When
-        decimal taxedTotal = invoice.GetTotal();
+        decimal? taxedTotal = invoice.GetTaxedTotal();
 
         // Then
-        Check.That(taxedTotal).IsEqualTo(110m);
+        Check.That(taxedTotal).IsNull();
     }
 
     [Test]
@@ -62,17 +63,17 @@ public sealed class ISPTests
         // Given
         Sales sales = new([
             new FrenchInvoice([
-            new("Chaussure", 100, ItemType.Good),
-            new("Livraison", 10, ItemType.Service)
-        ]),
-        new ItalianInvoice([
-            new("Chaussure", 100, ItemType.Good),
-            new("Livraison", 10, ItemType.Service)
-        ]),
-    ]);
+                new("Chaussure", 100, ItemType.Good),
+                new("Livraison", 10, ItemType.Service)
+            ]),
+            new ItalianInvoice([
+                new("Chaussure", 100, ItemType.Good),
+                new("Livraison", 10, ItemType.Service)
+            ]),
+        ]);
 
         // When
-        decimal taxedTotal = sales.GetTaxedSales();
+        decimal? taxedTotal = sales.GetTaxedSales();
 
         // Then
         Check.That(taxedTotal).IsEqualTo(266.2m);

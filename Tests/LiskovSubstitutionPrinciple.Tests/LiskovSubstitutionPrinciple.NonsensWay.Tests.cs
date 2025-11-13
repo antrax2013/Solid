@@ -1,4 +1,5 @@
-﻿using NFluent;
+﻿using LiskovSubstitutionPrinciple.NonsensWay;
+using NFluent;
 using Sdk;
 
 namespace LiskovSubstitutionPrinciple.Tests;
@@ -37,6 +38,23 @@ public sealed class LSTests
 
         // Then
         Check.That(taxedTotal).IsEqualTo(134.2m);
+    }
+
+    [Test]
+    public void Quand_Je_Caclue_Le_Total_D_une_Facture_Du_Montana_Alors_J_Obtiens_Le_Montant_Attendu()
+    {
+        // Given
+        List<Item> items = [
+            new("Chaussure", 100, ItemType.Good),
+            new("Livraison", 10, ItemType.Service)
+        ];
+        MontanaInvoice invoice = new(items);
+
+        // When
+        decimal taxedTotal = invoice.GetTotal();
+
+        // Then
+        Check.That(taxedTotal).IsEqualTo(110m);
     }
 
     [Test]

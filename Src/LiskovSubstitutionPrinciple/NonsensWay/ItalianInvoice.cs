@@ -1,8 +1,8 @@
 ﻿using Sdk;
 
-namespace LiskovSubstitutionPrinciple;
+namespace LiskovSubstitutionPrinciple.NonsensWay;
 
-public sealed class ItalianInvoice(IEnumerable<Item> items) : Invoice(items)
+public sealed class ItalianInvoice(IEnumerable<Item> items) : ATaxedInvoice(items)
 {
     const decimal TAXE_RATE = 1.22m;
 

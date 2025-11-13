@@ -1,4 +1,4 @@
-﻿namespace LiskovSubstitutionPrinciple;
+﻿namespace SOLIDPrinciples;
 
 public sealed class Sales(IEnumerable<Invoice> invoices)
 {

@@ -1,12 +1,12 @@
 ﻿using Sdk;
 
-namespace DependencyInjectionPrinciple;
+namespace LiskovSubstitutionPrinciple.NonsensWay;
 
-public sealed class FrenchInvoice(IEnumerable<Item> items) : AInvoice(items), IInvoice, ITaxedInvoice
+public sealed class FrenchInvoice(IEnumerable<Item> items) : ATaxedInvoice(items)
 {
     const decimal TAXE_RATE = 1.2m;
 
-    public decimal GetTaxedTotal()
+    public override decimal GetTaxedTotal()
     {
         decimal total = 0.0m;
 
@@ -17,6 +17,4 @@ public sealed class FrenchInvoice(IEnumerable<Item> items) : AInvoice(items), II
 
         return total;
     }
-
-    public decimal GetTotal() => _items.Sum(i => i.UnitPrice);
 }

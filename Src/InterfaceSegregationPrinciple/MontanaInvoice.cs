@@ -2,5 +2,9 @@
 
 namespace InterfaceSegregationPrinciple;
 
-public sealed class MontanaInvoice(IEnumerable<Item> items) : AInvoice(items)
-{ }
+public sealed class MontanaInvoice(IEnumerable<Item> items) : IInvoice
+{
+    public IEnumerable<Item> Items => items;
+
+    public decimal GetTotal() => IInvoice.ComputeTotal(Items);
+}

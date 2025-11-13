@@ -2,7 +2,7 @@
 
 namespace OpenClosedPrinciple;
 
-public sealed class ItalianInvoice(IEnumerable<Item> items)
+public sealed class ItalianInvoice(IEnumerable<Item> items) : IInvoice
 {
     const decimal TAXE_RATE = 1.22m;
     private readonly IEnumerable<Item> _items = items;

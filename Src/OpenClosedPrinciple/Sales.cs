@@ -1,20 +1,15 @@
 ﻿namespace OpenClosedPrinciple;
 
-public sealed class Sales(IEnumerable<Object> invoices)
+public sealed class Sales(IEnumerable<IInvoice> invoices)
 {
-    private readonly IEnumerable<Object> _invoices = invoices;
+    private readonly IEnumerable<IInvoice> _invoices = invoices;
 
     public decimal GetTaxedSales()
     {
         decimal total = 0;
 
-        foreach (Object i in _invoices)
-            total += (i switch
-            {
-                FrenchInvoice fi => fi.GetTaxedTotal(),
-                ItalianInvoice ii => ii.GetTaxedTotal(),
-                _ => 0
-            });
+        foreach (IInvoice i in _invoices)
+            total += i.GetTaxedTotal();
 
         return total;
     }

@@ -2,19 +2,12 @@
 
 namespace InterfaceSegregationPrinciple;
 
-public sealed class FrenchInvoice(IEnumerable<Item> items) : ATaxedInvoice(items)
+public sealed class FrenchInvoice(IEnumerable<Item> items) : IInvoice, ITaxedInvoice
+
 {
-    const decimal TAXE_RATE = 1.2m;
+    public IEnumerable<Item> Items => items;
 
-    public override decimal GetTaxedTotal()
-    {
-        decimal total = 0.0m;
+    public decimal GetTaxedTotal() => ITaxedInvoice.ComputeTaxedTotal(Items, 1.2m);
 
-        static decimal ApplyTaxeRate(Item item) => item.UnitPrice * TAXE_RATE;
-
-        foreach (Item item in _items)
-            total += ApplyTaxeRate(item);
-
-        return total;
-    }
+    public decimal GetTotal() => IInvoice.ComputeTotal(Items);
 }
